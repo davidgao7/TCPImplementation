@@ -1,0 +1,8 @@
+[package]
+name = "tcp_implementation"
+version = "0.1.0"
+authors = ["David Gao <davidgao313@outlook.com>"]
+edition = "2021"
+
+[dependencies]
+tun-tap = "0.1.2"
