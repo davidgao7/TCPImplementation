@@ -2,7 +2,7 @@ extern crate tun_tap;  // Declares the use of the tun_tap crate, which provides 
 extern crate hex; // hexdecimal encoding/decoding
 
 use std::io;
-use hex_fmt::HexFmt;
+//use hex_fmt::HexFmt;
 
 fn main() -> io::Result<()> {
     // see if tun_tap working
@@ -32,7 +32,7 @@ fn main() -> io::Result<()> {
     // &buf[..nbytes] : a slice of the buffer containing only the received data
     // {:x} : attempts to format the buffer slice as hexadecimal
     print!("======run till here 4=============\n");
-    eprintln!("read {} bytes: {}", nbytes, HexFmt(&buf[..nbytes]));
+    eprintln!("read {} bytes: {:02x?}", nbytes, &buf[..nbytes]);
 
     Ok(()) // success
 }
