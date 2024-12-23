@@ -51,6 +51,6 @@ fn main() -> io::Result<()> {
         // &buf[..nbytes] : a slice of the buffer containing only the received data
         // {:x} : attempts to format the buffer slice as hexadecimal
         //print!("======run till here 4=============\n");
-        eprintln!("read {} bytes: {:02x?}", nbytes - 4, &buf[4..nbytes]);
+        eprintln!("read {} bytes (flags: {:x}, proto: {:x}: {:x?})", nbytes - 4, flags, proto, &buf[4..nbytes]);
     }
 }

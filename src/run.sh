@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e  # ensures the script exits if any command fails
+# ensure run.sh uses unix-style line endings (\n) instead of windows-style(\r\n)
 
 # 1. build the rust project
 cargo b --release
@@ -16,4 +18,5 @@ ip link set up dev tun0
 # 5. check ip addr
 # ip addr
 # wait process to finish
+trap kill $pid INT TERM
 wait $pid
