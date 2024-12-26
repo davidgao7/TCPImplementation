@@ -44,11 +44,13 @@ fn main() -> io::Result<()> {
          * Output
          * returns a `u16` integer composed from the provided byte array*/
         // the first 4 bytes of the buffer ar einterpreted as metadata
-        let flags = u16::from_be_bytes([buf[0], buf[1]]); // byte 0-1: represent flags (interpreted as a u16 integer in big-endian order)
-        let proto = u16::from_be_bytes([buf[2], buf[3]]); // protocol type (e.g. IPv4, IPv6)
+        // enthernet frame we got,
+        // link level protocal
+        let _eth_flags = u16::from_be_bytes([buf[0], buf[1]]); // byte 0-1: represent flags (interpreted as a u16 integer in big-endian order)
+        let eth_proto = u16::from_be_bytes([buf[2], buf[3]]); // protocol type (e.g. IPv4, IPv6)
 
         // filter anything that is not ipv4 packet
-        if proto != 0x0800 {
+        if eth_proto != 0x0800 {
             // no ipv4
             continue;
         }
@@ -61,12 +63,18 @@ fn main() -> io::Result<()> {
                 //print!("======run till here 4=============\n");
                 // NOTE: get proto type : 86dd , which is the enthertype that indicates the payload of an
                 // enthernet frame contains an IPV6 (internet protocol version 6) packet
+
+                // ip level protocal, should be set to tcp
+                let src = p.source_addr();
+                let destination = p.destination_addr();
+                let protocal = p.protocol();
+
                 eprintln!(
-                    "read {} bytes (flags: {:x}, proto: {:x}: {:x?})",
-                    nbytes - 4,
-                    flags,
-                    proto,
-                    p
+                    "{} -> {} {}b of proto: {:x}  ",
+                    src,
+                    destination,
+                    p.payload_len(),
+                    protocal,
                 );
             }
             Err(e) => {
